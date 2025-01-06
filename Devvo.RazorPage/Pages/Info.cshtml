@@ -1,0 +1,114 @@
+﻿@page
+@model Devvo.RazorPage.Pages.InfoModel
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/infoUsuario.css" />
+    <title>Devvo Challange</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="d-flex flex-column">
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+            <div class="container">
+                <a class="navbar-brand fs-4" href="#">Devvo Challenge</a>
+                <button class="navbar-toggler shadow-none border-0"
+                        type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar"
+                        aria-controls="offcanvasNavbar"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="sidebar offcanvas offcanvas-start text-bg-dark"
+                     tabindex="-1"
+                     id="offcanvasNavbar"
+                     aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header text-white border-bottom">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+                            Devvo Challenge
+                        </h5>
+                        <button type="button"
+                                class="btn-close btn-close-white shadow-none"
+                                data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body d-flex flex-column flex-lg-row p-4 flex-column p-lg-0">
+                        <ul class="navbar-nav justify-content-center align-items-center fs-5 flex-grow-1 pe-3">
+                            <li class="nav-item mx-2">
+                                <a class="nav-link active" aria-current="page" href="/forja">A Forja</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" href="/SobreAneis">Sobre os Anéis</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" href="Info">Minhas Informações</a>
+                            </li>
+                        </ul>
+                        <div class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-3 my-5 my-lg-0">
+                            <form method="post" asp-page-handler="Logout" class="m-0">
+                                <button type="submit" class="btn btn-link text-white" style="text-decoration: none;">Sair</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="d-flex flex-column">
+            <main class="main-content p-1 d-flex flex-column">
+                <div class="container">
+                    <div class="card-custom card text-white bg-dark mb-3 card-custom-info">
+                        <div class="card-header text-center">
+                            <h5 class="card-title">Informações do Usuário</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Email:</strong> @Model.usuarioLogado.Email</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-end gap-2">
+                            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                                <i class="bi bi-trash-fill"></i> Deletar Conta
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza de que deseja deletar sua conta? Essa ação não poderá ser desfeita.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
+                    <form asp-page-handler="DeletarConta" method="post">
+                        <button type="submit" class="btn btn-outline-danger">Confirmar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

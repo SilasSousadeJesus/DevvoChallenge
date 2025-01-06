@@ -1,0 +1,63 @@
+﻿body {
+    position: relative;
+    background: url("../assets/images/bg_black.jpg");
+    background-size: auto;
+    background-position: center;
+    background-repeat: repeat;
+    height: 100vh;
+    margin: 0;
+}
+
+.main-content {
+    position: relative; 
+    z-index: 1; 
+    padding: 2rem; 
+    color: white; 
+}
+
+
+.modalErroMensagem {
+    z-index: 9999 !important;
+}
+
+.card-custom {
+    width: 400px !important;
+    min-width: 200px !important;
+}
+
+.card.largura-fixa {
+    min-width: 250px !important;
+    max-width: 330px !important;
+}
+
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; 
+}
+
+.card img {
+    object-fit: cover !important;
+    height: 200px !important;
+}
+
+
+.btn-primary {
+    border: none;
+    border-radius: 50px;
+    background-color: #f94ca4 !important;
+    border-color: #f94ca4 !important;
+    transition: all 0.3s ease-in-out !important;
+}
+
+.btn-primary:hover {
+    background-color: #e63982 !important;
+    border-color: #e63982 !important;
+}
+
+.containerSemAnel {
+    height: 600px  ;
+    margin-top: 200px;
+}

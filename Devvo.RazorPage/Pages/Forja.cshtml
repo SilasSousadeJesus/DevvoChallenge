@@ -1,0 +1,394 @@
+﻿@page
+@model Devvo.RazorPage.Pages.ForjaModel
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/forja.css" />
+    <title>Devvo Challange</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="d-flex flex-column">
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+            <div class="container">
+                <a class="navbar-brand fs-4" href="#">Devvo Challenge</a>
+                <button class="navbar-toggler shadow-none border-0"
+                        type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar"
+                        aria-controls="offcanvasNavbar"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="sidebar offcanvas offcanvas-start text-bg-dark"
+                     tabindex="-1"
+                     id="offcanvasNavbar"
+                     aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header text-white border-bottom">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+                            Devvo Challange
+                        </h5>
+                        <button type="button"
+                                class="btn-close btn-close-white shadow-none"
+                                data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body d-flex flex-column flex-lg-row p-4 flex-column p-lg-0">
+                        <ul class="navbar-nav justify-content-center align-items-center fs-5 flex-grow-1 pe-3">
+                            <li class="nav-item mx-2">
+                                <a class="nav-link active" aria-current="page" href="/forja">A Forja</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" href="/SobreAneis">Sobre os Anéis</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" href="Info">Minhas Informações</a>
+                            </li>
+                        </ul>
+                        <div class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-3 my-5 my-lg-0">
+                            <form method="post" asp-page-handler="Logout" class="m-0">
+                                <button type="submit" class="btn btn-link text-white" style="text-decoration: none;">Sair</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <main class="main-content p-1 d-flex flex-column" >
+            <div class="container">
+                <div class="text-center my-4">
+                    <h2 class="text-white">A Forja Suprema de Celebrimbor</h2>
+                    <p class="text-white">
+                        One Challenge to rule them all, One Challenge to find them, One
+                        Challenge to bring them all, and in the darkness bind them.
+                    </p>
+                </div>
+
+                <div class="d-flex justify-content-end mb-4">
+                    <button class="btn btn-primary px-4 py-2 rounded-pill shadow-sm"
+                            style="font-size: 1.1rem; background-color: #f94ca4; border-color: #f94ca4;"
+                            data-bs-toggle="modal"
+                            data-bs-target="#forjarModal">
+                        <i class="fas fa-plus-circle me-2"></i> Forjar
+                    </button>
+                </div>
+            </div>
+
+            @if (Model.Aneis.Any() && Model.Aneis != null)
+            {
+
+                <div class="row g-2 teste" style="width: 100%">
+                    @foreach (var anel in Model.Aneis)
+                    {
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex  justify-content-center align-content-center justify-content-center ">
+                            <div class="card h-100 card-custom">
+                                <img src="@anel.Imagem" class="card-img-top" alt="@anel.Nome" />
+                                <div class="card-body">
+                                    <h4 class="card-title">@anel.Nome</h4>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Portador:</span> @anel.Portador
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Forjador:</span> @anel.ForjadoPor
+                                    </li>
+                                </ul>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        @anel.Poder
+                                    </p>
+                                </div>
+                                <div class="card-body d-flex justify-content-end gap-2">
+                                    <button class="btn btn-sm btn-outline-primary"
+                                            title="Editar"
+                                            style="color: green; border-color: green;"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editModal"
+                                            data-id="@anel.Id"
+                                            data-nome="@anel.Nome"
+                                            data-portador="@anel.Portador"
+                                            data-forjadopor="@anel.ForjadoPor"
+                                            data-poder="@anel.Poder"
+                                            data-tipo="@((int)anel.Tipo)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+
+                                    <button class="btn btn-sm btn-outline-danger"
+                                            title="Excluir"
+                                            style="color: #f94ca4; border-color: #f94ca4;"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal"
+                                            onclick="setAnelId('@anel.Id')">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="containerSemAnel  d-flex justify-content-start align-content-start justify-content-start flex-column">
+
+                    <h1 class="card-title text-center" style="color: #f94ca4;">FORGE SEU PRIMEIRO ANEL</h1>
+
+                </div>       
+            }
+        </main>
+    </div>
+
+   
+
+    <!-- Modal de edição -->
+
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Editar Anel</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeButtonEditModal"></button>
+                </div>
+                <form method="post" asp-page-handler="EditarAnel" id="editForm">
+                    <div class="modal-body">
+                        <input type="hidden" id="anelId" name="Id" />
+                        <div class="mb-3">
+                            <label for="anelNome" class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="anelNome" name="Nome" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="anelPortador" class="form-label">Portador</label>
+                            <input type="text" class="form-control" id="anelPortador" name="Portador" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="anelForjadoPor" class="form-label">Forjado Por</label>
+                            <input type="text" class="form-control" id="anelForjadoPor" name="ForjadoPor" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="anelPoder" class="form-label">Poder</label>
+                            <textarea class="form-control" id="anelPoder" name="Poder" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="anelTipo" class="form-label">Tipo</label>
+                            <select class="form-select" id="anelTipo" name="Tipo" required>
+                                <option value="1">Para Elfos</option>
+                                <option value="2">Para Anões</option>
+                                <option value="3">Para Homens</option>
+                                <option value="4">Para Sauron</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeButtonEditModal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" id="submitButtonEditModal">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação de Exclusão -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza que deseja excluir este anel?</p>
+                </div>
+                <div class="modal-footer">
+                    <form method="post" asp-page-handler="ConfirmDelete">
+                        <input type="hidden" id="anelIdToDelete" name="AnelId" />
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Excluir</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Forja -->
+    <div class="modal fade"
+         id="forjarModal"
+         tabindex="-1"
+         aria-labelledby="forjarModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forjarModalLabel">
+                        Forjar Anel do poder
+                    </h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                            id="closeButton"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Você está prestes a forjar um novo anel do poder. Insira as
+                        informações do anel.
+                    </p>
+                    <form method="post" asp-page-handler="ForjarAnel" id="forjarForm">
+                        <div class="mb-3">
+                            <label for="itemNome" class="form-label">Nome do Anel</label>
+                            <input type="text" id="anelDTO.Nome" placeholder="Digite o nome do item" asp-for="anelModel.Nome" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="anelModel.Nome"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="anelDTO.Poder" class="form-label">Poder</label>
+                            <input type="text" class="form-control" id="anelDTO.Poder" placeholder="Digite o poder do item" asp-for="anelModel.Poder" required />
+                            <span class="text-danger" asp-validation-for="anelModel.Poder"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="anelDTO.Portador" class="form-label">Portador</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="anelDTO.Portador"
+                                   asp-for="anelModel.Portador"
+                                   placeholder="Digite o portador do item" required />
+                            <span class="text-danger" asp-validation-for="anelModel.Portador"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="anelModel.ForjadoPor" class="form-label">Forjador</label>
+                            <input type="text"
+                                   class="form-control"
+                                   asp-for="anelModel.ForjadoPor"
+                                   id="anelModel.ForjadoPor"
+                                   placeholder="Digite o forjador do item" required />
+                            <span class="text-danger" asp-validation-for="anelModel.ForjadoPor"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="anelModel.Tipo" class="form-label">Tipo</label>
+                            <select class="form-select" id="anelModel.Tipo" asp-for="anelModel.Tipo" required>
+                                <option value="1">Para Elfos</option>
+                                <option value="2">Para Anões</option>
+                                <option value="3">Para Homens</option>
+                                <option value="4">Para Sauron</option>
+                            </select>
+                            <span class="text-danger" asp-validation-for="anelModel.Tipo"></span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal" id="closeButton">
+                                Fechar
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="submitButton">Forjar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Erro -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="errorModalLabel">@Model.TituloMensagemErro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="modalErrorMessage" style="text-align: justify"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+@section Scripts
+{
+    <script>
+        function setAnelId(anelId) {
+            document.getElementById('anelIdToDelete').value = anelId;
+        }
+
+     document.getElementById('editModal').addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+
+            var id = button.getAttribute('data-id');
+            var nome = button.getAttribute('data-nome');
+            var portador = button.getAttribute('data-portador');
+            var forjadoPor = button.getAttribute('data-forjadopor');
+            var poder = button.getAttribute('data-poder');
+            var tipo = button.getAttribute('data-tipo');
+
+            document.getElementById('anelId').value = id;
+            document.getElementById('anelNome').value = nome;
+            document.getElementById('anelPortador').value = portador;
+            document.getElementById('anelForjadoPor').value = forjadoPor;
+            document.getElementById('anelPoder').value = poder;
+            document.getElementById('anelTipo').value = tipo;
+
+            var select = document.getElementById('anelTipo');
+            select.value = tipo;  
+            var event = new Event('change'); 
+            select.dispatchEvent(event);
+        });
+
+            var editModal = new bootstrap.Modal(document.getElementById('editModal'));
+            var form = document.getElementById('editForm');
+            var submitButton = document.getElementById('submitButtonEditModal');
+
+
+            submitButton.addEventListener('click', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault(); 
+                    form.reportValidity();
+                }
+            });
+
+    </script>
+
+    @if (Model.mostrarMensagem)
+    {
+        <script>
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var modalErrorMessage = document.getElementById('modalErrorMessage');
+                modalErrorMessage.innerText = decodeHtml('@Model.MensagemErro');
+
+                var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                errorModal.show();
+
+                setTimeout(() => {
+                    errorModal.hide();
+                }, 8000);
+            });
+
+            function decodeHtml(html) {
+                var txt = document.createElement('textarea');
+                txt.innerHTML = html;
+                return txt.value;
+            }
+        </script>
+    }
+
+}
+
+
+
